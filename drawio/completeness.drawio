@@ -1,0 +1,25 @@
+<mxfile host="65bd71144e">
+    <diagram id="LXvhZH188yyETzz4Nycu" name="Page-1">
+        <mxGraphModel dx="997" dy="847" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fillStyle=dots;" vertex="1" parent="1">
+                    <mxGeometry x="15" y="140" width="820" height="460" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="180" width="670" height="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Негибкая система типов" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="220" y="260" width="380" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Гибкая система типов" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="330" y="420" width="310" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Семантика" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="280" y="510" width="210" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -242,9 +242,8 @@ layout: default
 layout: image
 image: /images/ecmascript_spec.png
 backgroundSize: contain
+title: ECMAScript
 ---
-
-# ECMAScript
 
 ---
 layout: default
@@ -299,9 +298,11 @@ layout: default
 
 # Система типов
 
-- Система доказательства подмножетсва (ослабленных) утверждений о программах
+- Система доказательства подмножества (ослабленных) утверждений
 - Исходит из семантики языка
 - Является "упрощённой версией" (проекцией) семантики
+
+Система типов предназначена для доказательства *отсутствия* определённого рода ошибок при исполнении программы - **ошибок типизации**.
 
 ---
 layout: statement
@@ -385,9 +386,193 @@ layout: default
 
 # Примеры: составные выражения
 
+````md magic-move
 ```ts
-[]
-({})
-() => {}
-
+let a1 = []            // never[]
+let a2 = {}            // {}
+let a3 = () => {}      // () => void
 ```
+```ts
+let a1 = [42, 100500.5]                  // number[]
+let a2 = { a: "The Answer", b: false }   // { a: string, b: boolean }
+let a3 = (arg: string): number => {
+  return arg.length
+}                                        // (arg: string) => number
+```
+```ts
+const a1 = [42, 100500.5] as const                  // readonly [42, 100500.5]
+const a2 = { a: "The Answer", b: false } as const   // { readonly a: string, readonly b: boolean }
+const a3 = (arg: string): number => {
+  return arg.length
+}                                                   // (arg: string) => number
+```
+````
+
+---
+layout: default
+---
+
+# Аннотации типов
+
+Расширение синтаксиса для явного утверждения типов выражений
+
+---
+layout: default
+---
+
+# Проверка типов
+
+---
+layout: default
+---
+
+# Вывод типов
+
+---
+layout: section
+---
+
+# Свойства систем типов
+
+---
+layout: default
+---
+
+# Свойства систем типов
+
+- **Надёжность** (soundness)
+- **Полнота** (completeness)
+- **Разрешимость** (resolvability)
+
+---
+layout: default
+---
+
+# Надёжность системы типов
+
+Система типов **надёжна** (*sound*), если выведенные типы **_гарантированно_** соответствуют семантике (поведению в runtime).
+
+*Вычисление корректно типизированного выражения либо зациклится, либо гарантированно даст в результате значение, удовлетворяющее выведенному типу.*
+
+---
+layout: default
+---
+
+# Множества программ, считающихся корректными
+
+<img src="./images/soundness.svg" />
+
+---
+layout: statement
+---
+
+# Надёжность - это если программа корректно типизирована, то она корректна с точки зрения семантики
+
+---
+layout: default
+---
+
+# Надёжность системы типов TypeScript
+
+[https://github.com/Microsoft/TypeScript/wiki/TypeScript-Design-Goals]
+
+- **Non-goals**:
+  - Apply a **sound** or "**provably correct**" type system. Instead, strike a balance between correctness and productivity.
+
+---
+layout: image-right
+---
+
+# И как с этим жить?
+
+<v-clicks>
+
+- Мы **_хотим_**, чтобы типы в коде были верными
+- Просто *ответственность за это ложится на разработчика*
+- Type checker - просто инструмент
+- Для обеспечения гарантий нужны *best practices* и *соглашения*
+
+</v-clicks>
+
+---
+dragPos:
+  first_time: 262,29,404,_
+  cpp: 442,272,54,_
+---
+
+<img v-drag="'first_time'" src="./images/first_time.png" />
+<div v-drag="'cpp'" style="background-color: white;text-alignment: center">
+<b>C++</b>
+</div>
+
+---
+layout: default
+---
+
+# Полнота системы типов
+
+Система типов может считать ошибочными программы, которые с точки зрения семантики считаются валидными.
+
+Чем "гибче" система типов, тем больше валидных программ могут быть типизированы.
+
+Полнота - это покрытие системой типов множества валидных программ.
+
+---
+layout: statement
+---
+
+# Если программа корректна с точки зрения семантики, то она должна быть корректно типизирована
+
+---
+layout: default
+---
+
+# "Гибкость" системы типов
+
+<img src="./images/completeness.svg" />
+
+---
+layout: default
+---
+
+# Надёжная и полная система типов
+
+<img src="./images/sound_complete.svg" />
+
+---
+layout: default
+---
+
+# Надёжность и полнота TypeScript
+
+<img src="./images/completeness_ts.svg" />
+
+---
+layout: default
+---
+
+# Разрешимость системы типов
+
+Система типов **разрешимая**, если задачи проверки и вывода типов *алгоритмически разрешимы*.
+
+С неразрешимой системой типов:
+
+- проверка типов может зациклиться
+- можно "программировать на типах"
+
+---
+layout: default
+---
+
+# Разрешимость системы типов
+
+<img src="./images/resolvability.svg" />
+
+---
+layout: default
+---
+
+# Разрешимость системы типов TypeScript
+
+<img src="./images/resolvability_ts.svg" />
+

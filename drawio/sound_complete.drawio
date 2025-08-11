@@ -1,0 +1,19 @@
+<mxfile host="65bd71144e">
+    <diagram id="inG4pE-IA-hqZ2CZCK4s" name="Page-1">
+        <mxGraphModel dx="997" dy="847" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Надёжная и полная система типов" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="20" y="290" width="280" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Семантика" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=20;fontStyle=1;fillStyle=dots;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="290" width="280" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="===" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="360" y="400" width="60" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
