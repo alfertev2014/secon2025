@@ -239,11 +239,219 @@ layout: default
 ```
 
 ---
+layout: default
+---
+
+# Пример: арифметические выражения
+
+Операционная семантика
+
+````md magic-move
+```ts
+(2 + 2 * 2) * ((2 + 2) * 2)
+```
+```ts
+(2 + 4) * ((2 + 2) * 2)
+```
+```ts
+6 * ((2 + 2) * 2)
+```
+```ts
+6 * (4 * 2)
+```
+```ts
+6 * 8
+```
+```ts
+40
+```
+````
+
+---
+layout: default
+---
+
+# Пример: Базовые типы JavaScript
+
+````md magic-move
+```ts
+2 + "2"     // --> ?
+true + null // --> ?
+```
+```ts
+2 + "2"     // --> ?
+true + null // --> ?
+[] + {}     // --> ?
+```
+```ts
+2 + "2"     // --> "22"
+true + null // --> 1
+[] + {}     // --> "[object Object]"
+```
+````
+
+---
+layout: default
+---
+
+# Абстракция
+
+````md magic-move
+```ts
+function f() {
+  return (1 + 2 + 3) * (1 + 2 + 3) + ((1 + 2 + 3) * (1 + 2 + 3)) * ((1 + 2 + 3) * (1 + 2 + 3))
+}
+```
+```ts
+function f() {
+  const a = 1 + 2 + 3
+  return a * a + (a * a) * (a * a)
+}
+```
+```ts
+function f() {
+  const a = 1 + 2 + 3
+  const b = a * a
+  return b + b * b
+}
+```
+```ts
+
+function f() {
+  const a = 1 + 2 + 3
+  const square = (x: number) => x * x
+  const b = square(a)
+  return b + square(b)
+}
+```
+```ts
+const square = (x: number) => x * x
+
+function f() {
+  const a = 1 + 2 + 3
+  const b = square(a)
+  return b + square(b)
+}
+```
+```ts
+const square = (x: number) => x * x
+
+function f(a: number) {
+  const b = square(a)
+  return b + square(b)
+}
+
+f(1 + 2 + 3)
+```
+````
+
+---
 layout: image
 image: /images/ecmascript_spec.png
 backgroundSize: contain
 title: ECMAScript
 ---
+
+---
+layout: default
+---
+
+# Общие черты языков программирования
+
+- Базовые типы данных и операции над ними
+- Составные типы данных (объекты и массивы)
+- Древовидные выражения
+- Переменные с лексической областью видимости
+- Функции и процедуры
+- Замыкания
+- Модули
+
+---
+layout: default
+---
+
+# Лямбда-исчисление
+
+- Теоретический каркас языков программирования
+- Два правила:
+  - правило области видимости символов ("альфа-конверсия")
+  - правило подстановки значений вместо символов ("бета-редукция")
+
+---
+layout: default
+---
+
+# Редукция
+
+````md magic-move
+```ts {8}
+const square = (x: number) => x * x
+
+function f(a: number) {
+  const b = square(a)
+  return b + square(b)
+}
+
+f(1 + 2 + 3)
+```
+```ts {8}
+const square = (x: number) => x * x
+
+function f(a: number) {
+  const b = square(a)
+  return b + square(b)
+}
+
+f(6)
+```
+```ts {3-6}
+const square = (x: number) => x * x
+
+((a: number) => {
+  const b = square(a)
+  return b + square(b)
+})(6)
+```
+```ts {3,4}
+const square = (x: number) => x * x
+
+const b = square(6)
+b + square(b)
+```
+```ts
+const b = ((x: number) => x * x)(6)
+b + ((x: number) => x * x)(b)
+```
+```ts
+const b = 6 * 6
+b + b * b
+```
+```ts
+const b = 36
+b + b * b
+```
+```ts
+36 + 36 * 36
+```
+```ts
+36 + 1296
+```
+```ts
+1332
+```
+````
+
+---
+layout: default
+---
+
+# Ошибки типизации
+
+```ts twoslash
+const a = 2 + "2"
+
+const b = [] + {}
+```
 
 ---
 layout: default
@@ -270,11 +478,40 @@ layout: default
 layout: default
 ---
 
-# Задачи при редактировании исходного кода
+# Ошибки
 
-- Навигация по коду, автодополнение, рефакторинг, кодогенерация
-- Статическое рассуждение об исполнении программ
-- Пошаговая отладка и динамическое профилирование
+- Синтаксические ошибки
+- Ошибки времени исполнения
+  - Ошибки среды исполнения
+  - Необработанные исключения
+  - stack overflow, out of memory, зацикливания
+  - Логические ошибки
+
+---
+layout: default
+---
+
+# TypeError
+
+<br />
+
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError]
+
+A `TypeError` may be thrown when:
+
+- an operand or argument passed to a function is incompatible with the type expected by that operator or function; or
+- when attempting to modify a value that cannot be changed; or
+- when attempting to use a value in an inappropriate way.
+
+---
+layout: default
+---
+
+# Статический анализ
+
+- Рассуждения об исполнении программы без её реального запуска
+- Доказательство свойств программ
+  - Обнаружение потенциальных ошибок или **доказательство** их отсутствия
 
 ---
 layout: default
@@ -372,6 +609,17 @@ const a3 = "The Answer"  // "The Answer"
 const a4 = true          // true
 const a5 = false         // false
 ```
+
+```ts
+const a1 = 42            // 42
+const a2 = 100500.5      // 100500.5
+const a3 = "The Answer"  // "The Answer"
+const a4 = true          // true
+const a5 = false         // false
+
+const a6 = null          // null
+const a7 = undefined     // undefined
+```
 ````
 
 ---
@@ -414,7 +662,38 @@ layout: default
 
 # Аннотации типов
 
-Расширение синтаксиса для явного утверждения типов выражений
+````md magic-move
+```ts
+const f: (arg: string) => number   =  (arg: string): number => {
+  const arr: string[] = arg.split(' ');
+  return arr.length
+}
+```
+```ts {2}
+const f: (arg: string) => number   =  (arg: string): number => {
+  const arr: string[] = (arg as string).split(' ');
+  return arr.length
+}
+```
+```ts {2}
+const f: (arg: string) => number   =  (arg: string): number => {
+  const arr: string[] = (arg.split as (sep: string) => string[])(' ');
+  return arr.length
+}
+```
+```ts {3}
+const f: (arg: string) => number   =  (arg: string): number => {
+  const arr: string[] = arg.split(' ');
+  return arr.length as number
+}
+```
+```ts {2,3}
+const f: (arg: string) => number   =  (arg: string): number => {
+  const arr: string[] = (arg.split satisfies (sep: string) => string[])(" ");
+  return arr.length satisfies number
+}
+```
+````
 
 ---
 layout: default
@@ -422,11 +701,44 @@ layout: default
 
 # Проверка типов
 
+- Проверка выражений на соответствие правилам типизации
+- Проверка совместимости типов при
+  - инициализации переменных
+  - присваиваниях
+  - передаче аргументов в функцию
+
+---
+layout: default
+---
+
+# Проверка типов
+
+```ts twoslash
+const a: string = 42;        // Инициализация
+
+let b: boolean = false
+b = null                     // Присваивание
+
+const c: { prop: string } = { prop: 42}   // Ожидаемый тип объекта
+
+c.prop = false             // Присваивание property
+
+const f = (arg: string) => { }
+f(42)                   // Передача аргумента в функкцию
+```
+
 ---
 layout: default
 ---
 
 # Вывод типов
+
+- Реконструкция отсутствующих аннотаций типов
+- Выполняется на основе правил типизации
+- Исходные данные:
+  - Типы литеральные выражений и встроенных операций
+  - Явные аннотации типов
+
 
 ---
 layout: section
@@ -496,8 +808,8 @@ layout: image-right
 
 ---
 dragPos:
-  first_time: 262,29,404,_
-  cpp: 442,272,54,_
+  first_time: -58,0,0,0
+  cpp: -58,0,0,0
 ---
 
 <img v-drag="'first_time'" src="./images/first_time.png" />
@@ -575,4 +887,3 @@ layout: default
 # Разрешимость системы типов TypeScript
 
 <img src="./images/resolvability_ts.svg" />
-
