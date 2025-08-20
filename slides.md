@@ -92,7 +92,7 @@ dragPos:
   microsoft: 648,383,209,_
 ---
 
-# Коротко про TypeScript
+# TypeScript
 
 - Язык программирования
 - Синтаксис основан на JavaScript
@@ -291,6 +291,13 @@ true + null // --> 1
 ````
 
 ---
+layout: image
+image: /images/ecmascript_spec.png
+backgroundSize: contain
+title: ECMAScript
+---
+
+---
 layout: default
 ---
 
@@ -344,13 +351,6 @@ function f(a: number) {
 f(1 + 2 + 3)
 ```
 ````
-
----
-layout: image
-image: /images/ecmascript_spec.png
-backgroundSize: contain
-title: ECMAScript
----
 
 ---
 layout: default
@@ -738,6 +738,23 @@ layout: default
 - Исходные данные:
   - Типы литеральные выражений и встроенных операций
   - Явные аннотации типов
+
+---
+layout: default
+---
+
+# Функциональные типы
+
+```ts twoslash
+const f = (arg1: string, arg2: number) => arg1.length === arg2
+//    ^?
+
+const res = f("fooBar", 6)
+//    ^?
+```
+
+- Тип лямбда-выражения строится из типов аргументов и выведенного типа результата
+- Тип вызова функции (примерения к аргументам) равен типу результата функции
 
 
 ---
