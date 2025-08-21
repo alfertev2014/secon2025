@@ -106,40 +106,6 @@ dragPos:
 <!--
 Итак, TypeScript - это язык программирования с синтаксисом, основанным на JavaScript, он транспилируется в JavaScript с минимальными изменениями кода (в идеале - происходит просто "стирание" типов). Основной фишкой его фишкой выступает тайпчекер, выполняющий вывод и проверку типов, а также, с ним идёт language-server для поддержки языка в IDE, автокомпилита и различных рефакторингов.
 -->
----
-layout: image-right
-image: /images/smiling_cat.png
----
-
-# TypeScript хвалят за
-
-- Предотвращение runtime-ошибок (TypeError)
-- Продуктивность разработки (поддержка в IDE)
-- Документируемость кода и API
-- Прививание хорошего стиля кода
-- Избавление от лишних проверок в runtime
-
-<!--
-Собственно, мы любим его за то, что он помогает нам отлавливать ошибки типизации и повышает продуктивность при написании и редактировании кода. Код получается более самодокументированным, и сам компилятор нас вынуждает писать такой код в более строгом и ясном стиле, который получается ещё и эффективным, потому что в нём не приходится вставлять runtime-проверок.
--->
----
-layout: image-right
-image: /images/angry_cat.png
----
-
-# TypeScript ругают за
-
-- Ненадёжная система типов
-- Слабо типизированная стандартная библиотека JavaScript
-- Неактуальные “.d.ts”-файлы для библиотек из NPM
-- Высокий порог входа (“трёх-этажные типы”)
-- Борьба с ошибками компиляции
-
-<!--
-И в то же время всем должно быть уже известно, что его система типов не надёжна, а взаимодействие с JavaScript вызывает ещё больше проблем. 
-
-И надо сказать, что TypeScript не самый простой язык. Даже некоторые простые повседневные с точки зрения JavaScript приёмы программирования могут потребовать написания сложных трёх-этажных типов. И если в них запутаться, это всё может вылиться в непродуктивную борьбу с компилятором по устранению ошибок, при которой так и хочется влепить any или принудительно привести тип через as.
--->
 
 ---
 layout: image-right
@@ -158,13 +124,30 @@ image: /images/tapl.png
 layout: default
 ---
 
+# Лямбда-куб
+
+<br />
+
+[https://en.wikipedia.org/wiki/Lambda_cube]
+
+<img src="./images/lambda_cube.svg" />
+
+---
+layout: image
+image: /images/pepe.png
+---
+
+---
+layout: default
+---
+
 # План доклада
 
 1. Семантика языков программирования
-1. Система типов и семантика языка
-1. Полиморфизм и системы типов
-1. Строгость и “уровень” языков программирования
-1. Соображения про методологии разработки
+1. Правила типизации
+1. Структурная и номинальная типизация, отношение подтипов
+1. Свойства систем типов
+1. Type Driven Development
 
 ---
 layout: section
@@ -172,33 +155,17 @@ layout: section
 
 # Семантика языков программирования
 
-Формальные системы, спецификация и реализации языка
+Формальные системы, спецификация и реализации языка, рассуждения о программах
 
 ---
 layout: default
 ---
 
-# Формальная система
-
-- Совокупность **абстрактных объектов**
-- **Правила** оперирования множеством символов
-- В строго синтаксической трактовке без учёта смыслового содержания
-
-Состоит из
-
-- **Язык** выражений
-- Множество **формул**
-- **Правила** преобразования формул
-
----
-layout: default
----
-
-# Язык
+# Язык (программирования)
 
 - **Алфавит** - конечное или счётное множество символов
 - **Синтаксис** - правила построения *выражений*
-- **Семантика** - правила определения *смысла* выражений
+- **Семантика** - правила определения *смысла* выражений (или исполнения программы)
 
 ---
 layout: default
@@ -228,6 +195,8 @@ layout: default
 
 # Пример: арифметические выражения
 
+<br />
+
 Семантика
 
 ```ts
@@ -243,6 +212,8 @@ layout: default
 ---
 
 # Пример: арифметические выражения
+
+<br />
 
 Операционная семантика
 
@@ -291,55 +262,12 @@ true + null // --> 1
 ````
 
 ---
-layout: image
-image: /images/ecmascript_spec.png
-backgroundSize: contain
-title: ECMAScript
----
-
----
 layout: default
 ---
 
-# Абстракция
+# Редукция
 
 ````md magic-move
-```ts
-function f() {
-  return (1 + 2 + 3) * (1 + 2 + 3) + ((1 + 2 + 3) * (1 + 2 + 3)) * ((1 + 2 + 3) * (1 + 2 + 3))
-}
-```
-```ts
-function f() {
-  const a = 1 + 2 + 3
-  return a * a + (a * a) * (a * a)
-}
-```
-```ts
-function f() {
-  const a = 1 + 2 + 3
-  const b = a * a
-  return b + b * b
-}
-```
-```ts
-
-function f() {
-  const a = 1 + 2 + 3
-  const square = (x: number) => x * x
-  const b = square(a)
-  return b + square(b)
-}
-```
-```ts
-const square = (x: number) => x * x
-
-function f() {
-  const a = 1 + 2 + 3
-  const b = square(a)
-  return b + square(b)
-}
-```
 ```ts
 const square = (x: number) => x * x
 
@@ -350,40 +278,6 @@ function f(a: number) {
 
 f(1 + 2 + 3)
 ```
-````
-
----
-layout: default
----
-
-# Общие черты языков программирования
-
-- Базовые типы данных и операции над ними
-- Составные типы данных (объекты и массивы)
-- Древовидные выражения
-- Переменные с лексической областью видимости
-- Функции и процедуры
-- Замыкания
-- Модули
-
----
-layout: default
----
-
-# Лямбда-исчисление
-
-- Теоретический каркас языков программирования
-- Два правила:
-  - правило области видимости символов ("альфа-конверсия")
-  - правило подстановки значений вместо символов ("бета-редукция")
-
----
-layout: default
----
-
-# Редукция
-
-````md magic-move
 ```ts {8}
 const square = (x: number) => x * x
 
@@ -451,7 +345,43 @@ layout: default
 const a = 2 + "2"
 
 const b = [] + {}
+
+const c = null
+
+c(a)
 ```
+
+---
+layout: image
+image: /images/ecmascript_spec.png
+backgroundSize: contain
+title: ECMAScript
+---
+
+---
+layout: default
+---
+
+# Общие черты языков программирования
+
+- Базовые типы данных и операции над ними
+- Составные типы данных (объекты и массивы)
+- Древовидные выражения
+- Переменные с лексической областью видимости
+- Функции и процедуры
+- Замыкания
+- Модули
+
+---
+layout: default
+---
+
+# Лямбда-исчисление
+
+- Теоретический каркас языков программирования
+- Правила:
+  - правило области видимости символов ("альфа-конверсия")
+  - правило подстановки значений вместо символов ("бета-редукция")
 
 ---
 layout: default
@@ -525,9 +455,9 @@ layout: default
 layout: section
 ---
 
-# Системы типов и семантика
+# Системы типов
 
-Что такое типы, свойства систем типов
+Что такое типы, правила типизации
 
 ---
 layout: default
@@ -570,6 +500,12 @@ layout: statement
 # Типы - это утверждения о выражениях
 
 ---
+layout: statement
+---
+
+# Тип - это множество допустимых значений
+
+---
 layout: default
 ---
 
@@ -583,9 +519,26 @@ layout: default
 
 ---
 layout: default
+dragPos:
+  typing_rules: 64,117,377,_
+  typing_rules2: 466,152,465,_
 ---
 
-# Примеры: литеральные выражения
+# Правила типизации
+
+<img v-drag="'typing_rules'" src="./images/typing_rules.png" />
+<img v-drag="'typing_rules2'" src="./images/typing_rules2.png" />
+
+---
+layout: image
+image: /images/pepe.png
+---
+
+---
+layout: default
+---
+
+# Литеральные выражения
 
 ````md magic-move
 ```ts
@@ -623,16 +576,10 @@ const a7 = undefined     // undefined
 ````
 
 ---
-layout: statement
----
-
-# Тип - это множество допустимых значений
-
----
 layout: default
 ---
 
-# Примеры: составные выражения
+# Составные типы
 
 ````md magic-move
 ```ts
@@ -664,6 +611,12 @@ layout: default
 
 ````md magic-move
 ```ts
+const f = (arg: string) => {
+  const arr = arg.split(' ');
+  return arr.length
+}
+```
+```ts
 const f: (arg: string) => number   =  (arg: string): number => {
   const arr: string[] = arg.split(' ');
   return arr.length
@@ -694,6 +647,29 @@ const f: (arg: string) => number   =  (arg: string): number => {
 }
 ```
 ````
+
+---
+layout: default
+---
+
+# Функциональные типы
+
+````md magic-move
+```ts
+const f = (arg1: string, arg2: number) => arg1.length === arg2
+
+const res = f("fooBar", 6)
+```
+```ts
+const f: (arg1: string, arg2: number) => boolean     = (arg1: string, arg2: number) => arg1.length === arg2
+
+const res: boolean                                   = f("fooBar", 6)
+```
+````
+
+- Тип лямбда-выражения строится из типов аргументов и выведенного типа результата
+- Тип вызова функции (примерения к аргументам) равен типу результата функции
+
 
 ---
 layout: default
@@ -731,6 +707,16 @@ f(42)                   // Передача аргумента в функкци
 layout: default
 ---
 
+# Type Compatibility
+
+[https://www.typescriptlang.org/docs/handbook/type-compatibility.html]
+
+<img src="./images/type_compatibility.png" />
+
+---
+layout: default
+---
+
 # Вывод типов
 
 - Реконструкция отсутствующих аннотаций типов
@@ -743,18 +729,88 @@ layout: default
 layout: default
 ---
 
-# Функциональные типы
+# Вывод типов
+
+````md magic-move
+```ts
+const a = 42
+
+const b = "The Answer to Life the Universe and Everything"
+
+const c = b + " is " + a
+
+const d = (s: string, n: number) => s.length === n
+
+const e = d(b, a)
+```
+```ts
+const a: 42                                 = 42
+
+const b: "The Answer to Life the Universe and Everything" =
+  "The Answer to Life the Universe and Everything"
+
+const c: string                             = b + " is " + a
+
+const d: (s: string, n: number) => boolean  = (s: string, n: number) => s.length === n
+
+const e: boolean                            = d(b, a)
+```
+```ts {8}
+const a: 42                                 = 42
+
+const b: "The Answer to Life the Universe and Everything" =
+  "The Answer to Life the Universe and Everything"
+
+const c: string                             = b + " is " + a
+
+const d: (s: string, n: number) => boolean  = (s, n) => s.length === n
+
+const e: boolean                            = d(b, a)
+```
+````
+
+---
+layout: default
+---
+
+# Type Inference
+
+[https://www.typescriptlang.org/docs/handbook/type-inference.html]
+
+<img src="./images/type_inference.png" />
+
+---
+layout: default
+---
+
+# Система типов с простыми типами
+
+- Типы считаются совместимыми, если они полностью идентичны
+- Различающиеся типы несовместимы при присванивании и передаче аргумента.
 
 ```ts twoslash
-const f = (arg1: string, arg2: number) => arg1.length === arg2
-//    ^?
+const a: string = 42
 
-const res = f("fooBar", 6)
-//    ^?
+const f = (arg: number)=> { }
+
+f(a)
 ```
 
-- Тип лямбда-выражения строится из типов аргументов и выведенного типа результата
-- Тип вызова функции (примерения к аргументам) равен типу результата функции
+---
+layout: default
+---
+
+# Полиморфизм
+
+- Один и тот же код может работать со значениями разных типов
+- Бывает статический и динамический
+
+Виды полиморфизма:
+
+- Отношение подтипов (**Subtyping**)
+- Параметрический полиморфизм (**Generics**)
+- Ad-hoc полиморфизм
+
 
 
 ---
