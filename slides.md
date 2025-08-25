@@ -145,7 +145,7 @@ layout: default
 
 1. Семантика языков программирования
 1. Правила типизации
-1. Структурная и номинальная типизация, отношение подтипов
+1. Полиморфизм и отношение подтипов
 1. Свойства систем типов
 1. Type Driven Development
 
@@ -161,7 +161,7 @@ layout: section
 layout: default
 ---
 
-# Язык (программирования)
+# Язык программирования
 
 - **Алфавит** - конечное или счётное множество символов
 - **Синтаксис** - правила построения *выражений*
@@ -195,8 +195,6 @@ layout: default
 
 # Пример: арифметические выражения
 
-<br />
-
 Семантика
 
 ```ts
@@ -212,8 +210,6 @@ layout: default
 ---
 
 # Пример: арифметические выражения
-
-<br />
 
 Операционная семантика
 
@@ -260,6 +256,13 @@ true + null // --> 1
 [] + {}     // --> "[object Object]"
 ```
 ````
+
+---
+layout: image
+image: /images/ecmascript_spec.png
+backgroundSize: contain
+title: ECMAScript
+---
 
 ---
 layout: default
@@ -352,13 +355,6 @@ c(a)
 ```
 
 ---
-layout: image
-image: /images/ecmascript_spec.png
-backgroundSize: contain
-title: ECMAScript
----
-
----
 layout: default
 ---
 
@@ -422,8 +418,6 @@ layout: default
 ---
 
 # TypeError
-
-<br />
 
 [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError]
 
@@ -575,6 +569,14 @@ const a7 = undefined     // undefined
 ```
 ````
 
+Литералу соответствует его собственный тип.
+
+<v-click at="2">
+
+Если данные неизменны, то литералу соответствует Unit-тип.
+
+</v-click>
+
 ---
 layout: default
 ---
@@ -596,12 +598,16 @@ let a3 = (arg: string): number => {
 ```
 ```ts
 const a1 = [42, 100500.5] as const                  // readonly [42, 100500.5]
-const a2 = { a: "The Answer", b: false } as const   // { readonly a: string, readonly b: boolean }
+const a2 = { a: "The Answer", b: false } as const
+// { readonly a: string, readonly b: boolean }
+
 const a3 = (arg: string): number => {
   return arg.length
 }                                                   // (arg: string) => number
 ```
 ````
+
+Составной тип зависит от типов своих составляющих.
 
 ---
 layout: default
@@ -660,16 +666,21 @@ const f = (arg1: string, arg2: number) => arg1.length === arg2
 
 const res = f("fooBar", 6)
 ```
-```ts
-const f: (arg1: string, arg2: number) => boolean     = (arg1: string, arg2: number) => arg1.length === arg2
+```ts {1,4}
+const f: (arg1: string, arg2: number) => boolean  =
+  (arg1: string, arg2: number) => arg1.length === arg2
 
-const res: boolean                                   = f("fooBar", 6)
+const res: boolean  =
+  f("fooBar", 6)
 ```
 ````
 
-- Тип лямбда-выражения строится из типов аргументов и выведенного типа результата
-- Тип вызова функции (примерения к аргументам) равен типу результата функции
+<v-click at="1">
 
+- Тип лямбда-выражения = (...типы аргументов) => выведенный тип результата
+- Тип вызова функции равен типу результата функции
+
+</v-click>
 
 ---
 layout: default
@@ -694,7 +705,15 @@ const a: string = 42;        // Инициализация
 
 let b: boolean = false
 b = null                     // Присваивание
+```
 
+---
+layout: default
+---
+
+# Проверка типов
+
+```ts twoslash
 const c: { prop: string } = { prop: 42}   // Ожидаемый тип объекта
 
 c.prop = false             // Присваивание property
@@ -780,13 +799,19 @@ layout: default
 <img src="./images/type_inference.png" />
 
 ---
+layout: section
+---
+
+# Полиморфизм и отношение подтипов
+
+---
 layout: default
 ---
 
 # Система типов с простыми типами
 
 - Типы считаются совместимыми, если они полностью идентичны
-- Различающиеся типы несовместимы при присванивании и передаче аргумента.
+- Различающиеся типы несовместимы
 
 ```ts twoslash
 const a: string = 42
@@ -803,15 +828,58 @@ layout: default
 # Полиморфизм
 
 - Один и тот же код может работать со значениями разных типов
-- Бывает статический и динамический
 
 Виды полиморфизма:
 
 - Отношение подтипов (**Subtyping**)
 - Параметрический полиморфизм (**Generics**)
-- Ad-hoc полиморфизм
+- **Ad-hoc** полиморфизм
+
+А также, бывает *статический* и *динамический*.
+
+---
+layout: default
+---
+
+# Отношение подтипов (<:)
+
+- "Полиморфизм для бедных"
+- Похоже на отношение вложения множеств
+- Если выражение имеет тип Т, то значение может быть любого подтипа T
 
 
+---
+layout: default
+---
+
+# Отношение подтипов: правила
+
+- Составляющие объединения типов - подтипы объединения
+
+```
+A  <:  A | B
+B  <:  A | B
+```
+
+- Пересечение типов - подтип своих составляющих:
+
+```
+A & B  <:  A
+A & B  <:  B
+```
+
+- Объектный тип - подтип объектного типа с меньшим числом properties:
+
+```
+{ a: A; b: B; c: C }   <:   { a: A; b: B; }  <:  { a: A; }
+{ a: A; b: B; c: C }   <:   { b: A; с: B; }  <:  { с: B; }
+```
+
+- Тип функции - подтип типа функции с большим числом аргументов:
+
+```
+(a: A) => R   <:   (a: A, b: B) => R   <:   (a: A, b: B, c: C) => R
+```
 
 ---
 layout: section
@@ -835,6 +903,8 @@ layout: default
 
 # Надёжность системы типов
 
+<br />
+
 Система типов **надёжна** (*sound*), если выведенные типы **_гарантированно_** соответствуют семантике (поведению в runtime).
 
 *Вычисление корректно типизированного выражения либо зациклится, либо гарантированно даст в результате значение, удовлетворяющее выведенному типу.*
@@ -843,15 +913,25 @@ layout: default
 layout: default
 ---
 
-# Множества программ, считающихся корректными
+# Пример: нарушение типовой безопасности
 
-<img src="./images/soundness.svg" />
+```ts
+type A = { a: string | boolean }
+type B = { a: string }
 
----
-layout: statement
----
+const b: B = { a: "foo" }
+const a: A = b
+a.a = true
+console.log("b.a", b.a.toUpperCase())
+```
 
-# Надёжность - это если программа корректно типизирована, то она корректна с точки зрения семантики
+<v-click>
+
+```
+TypeError: b.a.toUpperCase is not a function
+```
+
+</v-click>
 
 ---
 layout: default
@@ -865,24 +945,28 @@ layout: default
   - Apply a **sound** or "**provably correct**" type system. Instead, strike a balance between correctness and productivity.
 
 ---
-layout: image-right
+layout: default
+---
+
+<img src="./images/soundness.svg" />
+
+
+---
+layout: default
 ---
 
 # И как с этим жить?
-
-<v-clicks>
 
 - Мы **_хотим_**, чтобы типы в коде были верными
 - Просто *ответственность за это ложится на разработчика*
 - Type checker - просто инструмент
 - Для обеспечения гарантий нужны *best practices* и *соглашения*
 
-</v-clicks>
-
 ---
+layout: default
 dragPos:
-  first_time: -58,0,0,0
-  cpp: -58,0,0,0
+  first_time: 283,33,430,_
+  cpp: 480,287,50,_
 ---
 
 <img v-drag="'first_time'" src="./images/first_time.png" />
@@ -891,72 +975,66 @@ dragPos:
 </div>
 
 ---
-layout: default
+layout: section
 ---
 
-# Полнота системы типов
-
-Система типов может считать ошибочными программы, которые с точки зрения семантики считаются валидными.
-
-Чем "гибче" система типов, тем больше валидных программ могут быть типизированы.
-
-Полнота - это покрытие системой типов множества валидных программ.
+# Type Driven Development
 
 ---
-layout: statement
+layout: image-right
+image: /images/type_driven_development.jpg
 ---
 
-# Если программа корректна с точки зрения семантики, то она должна быть корректно типизирована
+# Type Driven Development
 
----
-layout: default
----
-
-# "Гибкость" системы типов
-
-<img src="./images/completeness.svg" />
+- Type
+- Define
+- Refine
 
 ---
 layout: default
 ---
 
-# Надёжная и полная система типов
+# Type Driven Development
 
-<img src="./images/sound_complete.svg" />
+1. **Type**
+    - Написать желаемый тип интерфейса/сигнатуры, опираясь на требования
+2. **Define**
+    - Написать минимальную реализацию, соответствующую типу
+3. **Refine**
+    - Доуточнить тип, сделать более строгим
 
----
-layout: default
----
-
-# Надёжность и полнота TypeScript
-
-<img src="./images/completeness_ts.svg" />
-
----
-layout: default
----
-
-# Разрешимость системы типов
-
-Система типов **разрешимая**, если задачи проверки и вывода типов *алгоритмически разрешимы*.
-
-С неразрешимой системой типов:
-
-- проверка типов может зациклиться
-- можно "программировать на типах"
+*Повторить цикл с п. 1*
 
 ---
 layout: default
 ---
 
-# Разрешимость системы типов
+# Test Driven Development
 
-<img src="./images/resolvability.svg" />
+1. **Красный тест**
+    - Написать один минимальный падающий тест, опираясь на требования
+2. **Зелёный тест**
+    - Написать минимальные изменения, чтобы сделать тест зелёным
+3. **Рефакторинг**
+    - Порефакторить, опираясь на здравый смысл
+
+*Повторить цикл с п. 1*
+
+---
+layout: section
+---
+
+# Заключение
 
 ---
 layout: default
 ---
 
-# Разрешимость системы типов TypeScript
+# Заключение
 
-<img src="./images/resolvability_ts.svg" />
+- TypeScript просто добавляет типизацию к JavaScript
+- За системой типов стоит сложная и интересная математика
+- Система типов достаточно гибкая для полиморфизма и написания спецификаций
+- Система типов ненадёжная и требует повышенного внимания
+- С типизацией изменяется подход к написанию кода и стиль кода
