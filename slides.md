@@ -15,6 +15,8 @@ drawings:
   persist: false
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
+fonts:
+  sans: Roboto
 ---
 
 # Ныряем в теорию типов
@@ -28,35 +30,52 @@ hideInToc: true
 
 # Приятно познакомиться
 
-- Василий Алфертьев
-- Frontend разработчик (React + TypeScript)
-- Компания: Открытые решения
-- Telegram: @alfertev2012
-- GitHub: alfertev2014
+<style>
+  .two-cols-grid {
+    align-items: center;
+  }
+</style>
+<br />
+<div class="two-cols-grid">
+  <div class="two-cols-grid"><img src="./images/vasya.jpg" style="border-radius: 50%" /><div><b>Василий Алфертьев</b></div></div>
+  <img src="./images/osinit.png" style="width: 300px" />
+  <div>
+    <p><img src="./images/telegram.svg" style="display: inline; width: 32px; height: 32px" /> <b>Telegram</b>: <a href="https://t.me/alfertev2012">@alfertev2012</a></p>
+    <p><img src="./images/github.svg" style="display: inline; width: 32px; height: 32px" /> <b>GitHub</b>: <a href="https://github.com/alfertev2014">alfertev2014</a></p>
+  </div>
+  <div>
+    <div class="two-cols-grid">
+      <div><img src="./images/react.svg" style="display: inline; width: 64px; height: 64px" /> React</div>
+      <div><img src="./images/ts_logo.png" style="display: inline; width: 64px; height: 64px" /> TypeScript</div>
+    </div>
+  </div>
+</div>
+
 
 <!--
-Сперва, кто я такой. Я Василий Алфертьев, в настоящее время работаю frontend-разработчиком в компании Открытые решения, пишу на React-е, активно использую TypeScript в работе. Ничего особенного, делаю интерфейсы различных одностраничных приложений.
+Сперва, кто я такой. Я Василий Алфертьев, в настоящее время работаю frontend-разработчиком в компании Открытые решения, пишу на React-е, активно использую TypeScript. Делаю UI различных одностраничных приложений.
 -->
 
 ---
-layout: two-cols-header
-level: 2
-hideInToc: true
+layout: default
 ---
 
 # Чем ещё владею
 
-::left::
+<div style="display: flex; flex-flow: row nowrap; gap: 40px; justify-content: stretch">
+
+<div>
 
 - 5+ лет в **С++**:
-  - системное программирование в Linux
+  - системщина в Linux
   - UI на Qt
 - ~6 лет в **Java**:
   - backend на Spring
   - базы данных
   - монолиты, микросервисы…
 
-::right::
+</div>
+<div>
 
 - Увлекаюсь
   - дизайном языков программирования
@@ -67,23 +86,14 @@ hideInToc: true
   - компиляторах и оптимизациях
   - "кишках" runtime разных языков
   - IDE и инструментах
-  - LISP, Prolog, OCaml, Haskell, Scala…
+
+</div>
+</div>
 
 <!--
-Когда-то занимался системным программированием на C++, писал UI на Qt, прошёл через backend-разработку на Java. Параллельно увлекался изучением вопросов дизайна языков программирования, математическими основами, которые за ними стоят... Фанат систем типов. Люблю поинтересоваться, как устроены компиляторы, IDE и другие инструменты.
+Когда-то много занимался системным программированием на C++, писал UI на Qt, прошёл через backend-разработку на Java... И параллельно увлекался изучением вопросов дизайна языков программирования, математическими основами, которые за ними стоят... Фанат систем типов. Люблю поинтересоваться, как устроены компиляторы, IDE и другие инструменты.
 
-И вот с этим опытом я пришёл во frontend-разработку, возлагая на TypeScript определённые надежды. Какое-то время я просто наблюдал за его развитием, а потом решил, что всё, пора.
--->
----
-layout: section
----
-
-# Коротко про TypeScript
-
-И его систему типов
-
-<!--
-Вспомним быстро, что из себя представляет TypeScript
+И вот с этим опытом, после некоторого наблюдения за развитием TypeScript и вебом, я таки пришёл во frontend-разработку, возлагая на TypeScript определённые надежды.
 -->
 ---
 layout: default
@@ -97,22 +107,23 @@ dragPos:
 - Язык программирования
 - Синтаксис основан на JavaScript
 - Транспиляция в JavaScript
-- Проверка типов
+- Проверка типов (typechecker)
 - Поддержка IDE (language server)
 
 <img v-drag="'ts_logo'" src="./images/ts_logo.png" />
 <img v-drag="'microsoft'" src="./images/microsoft.png" />
 
 <!--
-Итак, TypeScript - это язык программирования с синтаксисом, основанным на JavaScript, он транспилируется в JavaScript с минимальными изменениями кода (в идеале - происходит просто "стирание" типов). Основной фишкой его фишкой выступает тайпчекер, выполняющий вывод и проверку типов, а также, с ним идёт language-server для поддержки языка в IDE, автокомпилита и различных рефакторингов.
+Итак, TypeScript - это самостоятельный язык программирования, хоть его с синтаксис и основан на JavaScript, он транспилируется в JavaScript с минимальными изменениями кода (в идеале - происходит просто "стирание" типов). Основной его фишкой выступает тайпчекер, выполняющий проверку и вывод типов. А также, с ним идёт language-server для поддержки языка в IDE, для автокомпилита и различных рефакторингов.
 -->
-
 ---
-layout: image-right
-image: /images/tapl.png
+layout: default
 ---
 
 # Теория
+
+<div class="two-cols-grid" style="grid-template-columns: 2fr 1fr">
+<div>
 
 - Теория множеств
 - Теория доказательств
@@ -120,17 +131,21 @@ image: /images/tapl.png
 - Лямбда-исчисление
 - Операционная семантика
 
+</div>
+<div>
+  <img src="./images/tapl.png" />
+</div>
+</div>
+
 ---
 layout: default
 ---
 
 # Лямбда-куб
 
-<br />
-
 [https://en.wikipedia.org/wiki/Lambda_cube]
 
-<img src="./images/lambda_cube.svg" />
+<img src="./images/lambda_cube.svg" style="margin: auto; width: 380px"/>
 
 ---
 layout: image
@@ -153,9 +168,9 @@ layout: default
 layout: section
 ---
 
-# Семантика языков программирования
+# 1. Семантика языков программирования
 
-Формальные системы, спецификация и реализации языка, рассуждения о программах
+Формальные системы, <br />  рассуждения о программах
 
 ---
 layout: default
@@ -268,7 +283,7 @@ title: ECMAScript
 layout: default
 ---
 
-# Редукция
+# Пример: Выражения с функциями
 
 ````md magic-move
 ```ts
@@ -375,9 +390,12 @@ layout: default
 # Лямбда-исчисление
 
 - Теоретический каркас языков программирования
+- Выражения:
+  - Абстракция: `λ x . M`
+  - Применение: `M N`
 - Правила:
-  - правило области видимости символов ("альфа-конверсия")
-  - правило подстановки значений вместо символов ("бета-редукция")
+  - "альфа-конверсия": `λ x . M` === `λ y . M` (с заменой `x` на `y`)
+  - "бета-редукция": `(λ x . M) N` === `M` (с заменой `x` на `N`)
 
 ---
 layout: default
@@ -385,7 +403,7 @@ layout: default
 
 # Реализация и инструменты
 
-<img src="./images/implementation.svg" />
+<img src="./images/implementation.svg"  style="margin: auto; width: 620px"/>
 
 ---
 layout: default
@@ -393,7 +411,7 @@ layout: default
 
 # TypeScript и Node.js
 
-<img src="./images/implementation_ts.svg" />
+<img src="./images/implementation_ts.svg" style="margin: auto; width: 620px"/>
 
 <br />
 
@@ -406,12 +424,21 @@ layout: default
 
 # Ошибки
 
+<div class="two-cols-grid">
+<div>
+
 - Синтаксические ошибки
 - Ошибки времени исполнения
   - Ошибки среды исполнения
   - Необработанные исключения
   - stack overflow, out of memory, зацикливания
   - Логические ошибки
+
+</div>
+<div>
+  <img src="./images/error.jpg" style="width: 100%" />
+</div>
+</div>
 
 ---
 layout: default
@@ -431,6 +458,18 @@ A `TypeError` may be thrown when:
 layout: default
 ---
 
+# ReferenceError
+
+[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError]
+
+The `ReferenceError` object represents an error
+
+- when a variable that doesn't exist (or hasn't yet been initialized) in the current scope is referenced.
+
+---
+layout: default
+---
+
 # Статический анализ
 
 - Рассуждения об исполнении программы без её реального запуска
@@ -443,13 +482,25 @@ layout: default
 
 # Формальная верификация
 
-<img src="./images/verification.svg" />
+<img src="./images/verification.svg" style="margin: auto" />
+
+---
+layout: default
+---
+
+# Ещё раз
+
+- Спецификация языка - синтаксис и семантика
+- Большинство языков строятся на основе лямбда-исчисления
+- Язык может иметь множество реализаций по спецификации
+- Программы семантически некорректны, если приводят к ошибкам при исполнении
+- Статический анализ - проверка и поиск ошибок до исполнения по спецификации
 
 ---
 layout: section
 ---
 
-# Системы типов
+# 2. Правила типизации
 
 Что такое типы, правила типизации
 
@@ -466,16 +517,12 @@ layout: default
 Система типов предназначена для доказательства *отсутствия* определённого рода ошибок при исполнении программы - **ошибок типизации**.
 
 ---
-layout: statement
----
-
-# Типы - это не только типы данных!
-
----
 layout: default
 ---
 
 # Типы как раскладка данных в памяти
+
+Например, как структуры в языках C и C++
 
 ```c
 struct S {
@@ -488,16 +535,13 @@ struct S {
 ```
 
 ---
-layout: statement
+layout: default
 ---
 
-# Типы - это утверждения о выражениях
+# Что такое типы
 
----
-layout: statement
----
-
-# Тип - это множество допустимых значений
+- Типы - это утверждения о выражениях в коде
+  - В частности: **тип - это множество допустимых значений выражения**
 
 ---
 layout: default
@@ -690,8 +734,8 @@ layout: default
 
 - Проверка выражений на соответствие правилам типизации
 - Проверка совместимости типов при
-  - инициализации переменных
-  - присваиваниях
+  - инициализации
+  - присваивании
   - передаче аргументов в функцию
 
 ---
@@ -763,6 +807,17 @@ const d = (s: string, n: number) => s.length === n
 const e = d(b, a)
 ```
 ```ts
+const a/*: ???*/ = 42
+
+const b/*: ???*/ = "The Answer to Life the Universe and Everything"
+
+const c/*: ???*/ = b + " is " + a
+
+const d/*: ???*/ = (s: string, n: number)/*: ???*/ => s.length === n
+
+const e/*: ???*/ = d(b, a)
+```
+```ts
 const a: 42                                 = 42
 
 const b: "The Answer to Life the Universe and Everything" =
@@ -770,11 +825,12 @@ const b: "The Answer to Life the Universe and Everything" =
 
 const c: string                             = b + " is " + a
 
-const d: (s: string, n: number) => boolean  = (s: string, n: number) => s.length === n
+const d: (s: string, n: number) => boolean  =
+  (s: string, n: number): boolean => s.length === n
 
 const e: boolean                            = d(b, a)
 ```
-```ts {8}
+```ts {9}
 const a: 42                                 = 42
 
 const b: "The Answer to Life the Universe and Everything" =
@@ -782,7 +838,8 @@ const b: "The Answer to Life the Universe and Everything" =
 
 const c: string                             = b + " is " + a
 
-const d: (s: string, n: number) => boolean  = (s, n) => s.length === n
+const d: (s: string, n: number) => boolean  =
+  (s, n) => s.length === n
 
 const e: boolean                            = d(b, a)
 ```
@@ -802,7 +859,7 @@ layout: default
 layout: section
 ---
 
-# Полиморфизм и отношение подтипов
+# 3. Полиморфизм и отношение подтипов
 
 ---
 layout: default
@@ -854,19 +911,25 @@ layout: default
 
 # Отношение подтипов: правила
 
-- Составляющие объединения типов - подтипы объединения
+- Составляющие объединения типов являются подтипами объединения
 
 ```
 A  <:  A | B
 B  <:  A | B
 ```
 
-- Пересечение типов - подтип своих составляющих:
+- Пересечение типов является подтипом своих составляющих:
 
 ```
 A & B  <:  A
 A & B  <:  B
 ```
+
+---
+layout: default
+---
+
+# Отношение подтипов: правила
 
 - Объектный тип - подтип объектного типа с меньшим числом properties:
 
@@ -885,7 +948,7 @@ A & B  <:  B
 layout: section
 ---
 
-# Свойства систем типов
+# 4. Свойства систем типов
 
 ---
 layout: default
@@ -955,18 +1018,36 @@ layout: default
 layout: default
 ---
 
+<style scoped>
+  p {
+    background-color: #ffffff;
+  }
+</style>
+
 # И как с этим жить?
 
-- Мы **_хотим_**, чтобы типы в коде были верными
-- Просто *ответственность за это ложится на разработчика*
-- Type checker - просто инструмент
-- Для обеспечения гарантий нужны *best practices* и *соглашения*
+<img src="./images/house_of_cards.jpg" style="position: absolute; z-index: -100; right: 100px; bottom: 0; width: 642px" />
+
+<br />
+<div style="text-align: center; font-size: 1.5rem">
+<v-clicks>
+
+Мы **_хотим_**, чтобы типы в коде были верными
+
+*Ответственность ложится на разработчика*
+
+Type checker - просто инструмент
+
+Для гарантий нужны **_best practices_** и **_соглашения_**
+
+</v-clicks>
+</div>
 
 ---
 layout: default
 dragPos:
-  first_time: 283,33,430,_
-  cpp: 480,287,50,_
+  first_time: 262,29,404,_
+  cpp: 442,272,54,_
 ---
 
 <img v-drag="'first_time'" src="./images/first_time.png" />
@@ -978,7 +1059,7 @@ dragPos:
 layout: section
 ---
 
-# Type Driven Development
+# 5. Type Driven Development
 
 ---
 layout: image-right
@@ -1033,8 +1114,8 @@ layout: default
 
 # Заключение
 
-- TypeScript просто добавляет типизацию к JavaScript
+- Система типов помогает отловить определённые ошибки статически
 - За системой типов стоит сложная и интересная математика
-- Система типов достаточно гибкая для полиморфизма и написания спецификаций
-- Система типов ненадёжная и требует повышенного внимания
+- Система типов бывает достаточно гибкой для полиморфизма и написания спецификаций
+- Ненадёжная система типов требует повышенного внимания и дисциплины кода
 - С типизацией изменяется подход к написанию кода и стиль кода
