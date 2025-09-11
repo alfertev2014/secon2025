@@ -2,7 +2,7 @@
 # You can also start simply with 'default'
 theme: default
 # some information about your slides (markdown enabled)
-title: Ныряем в теорию типов для лучшего понимания TypeScript
+title: Ныряем в теорию типов для лучшего понимания языков программирования на примере TypeScript
 info: |
   ## Slidev Starter Template
   Presentation slides for developers.
@@ -21,11 +21,10 @@ fonts:
 
 # Ныряем в теорию типов
 
-для лучшего понимания TypeScript
+для лучшего понимания языков программирования на примере TypeScript
 
 ---
-level: 2
-hideInToc: true
+layout: default
 ---
 
 # Приятно познакомиться
@@ -35,10 +34,11 @@ hideInToc: true
     align-items: center;
   }
 </style>
-<br />
 <div class="two-cols-grid">
   <div class="two-cols-grid"><img src="./images/vasya.jpg" style="border-radius: 50%" /><div><b>Василий Алфертьев</b></div></div>
-  <img src="./images/osinit.png" style="width: 300px" />
+  <div>
+    <img src="./images/osinit.png" style="width: 300px" />
+  </div>
   <div>
     <p><img src="./images/telegram.svg" style="display: inline; width: 32px; height: 32px" /> <b>Telegram</b>: <a href="https://t.me/alfertev2012">@alfertev2012</a></p>
     <p><img src="./images/github.svg" style="display: inline; width: 32px; height: 32px" /> <b>GitHub</b>: <a href="https://github.com/alfertev2014">alfertev2014</a></p>
@@ -51,7 +51,6 @@ hideInToc: true
   </div>
 </div>
 
-
 <!--
 Сперва, кто я такой. Я Василий Алфертьев, в настоящее время работаю frontend-разработчиком в компании Открытые решения, пишу на React-е, активно использую TypeScript. Делаю UI различных одностраничных приложений.
 -->
@@ -62,13 +61,31 @@ layout: default
 
 # Чем ещё владею
 
-<div style="display: flex; flex-flow: row nowrap; gap: 40px; justify-content: stretch">
+<style>
+li {
+  margin-block: 0;
+}
+</style>
+<div class="two-cols-grid">
 
 <div>
 
 - 5+ лет в **С++**:
-  - системщина в Linux
+  - системное программирование
+  - Linux
   - UI на Qt
+
+</div>
+<div>
+
+- Увлекаюсь
+  - **дизайном языков программирования**
+  - best practices и архитектурой ПО
+  - математической логикой
+
+</div>
+<div>
+
 - ~6 лет в **Java**:
   - backend на Spring
   - базы данных
@@ -77,16 +94,16 @@ layout: default
 </div>
 <div>
 
-- Увлекаюсь
-  - дизайном языков программирования
-  - best practices и архитектурой ПО
-  - математической логикой
-- **Фанат систем типов**
-- Тянет разбираться в
-  - компиляторах и оптимизациях
-  - "кишках" runtime разных языков
-  - IDE и инструментах
-
+<ul>
+<li><b v-mark.red>Фанат систем типов</b></li>
+<li>Тянет разбираться в
+  <ul>
+  <li>компиляторах и оптимизациях</li>
+  <li>"кишках" runtime разных языков</li>
+  <li>IDE и инструментах</li>
+  </ul>
+</li>
+</ul>
 </div>
 </div>
 

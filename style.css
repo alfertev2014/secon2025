@@ -1,11 +1,18 @@
 :root {
   font-size: 20px;
   --slidev-code-font-size: 16px;
+  --slidev-code-line-height: 1.5em;
+  --slidev-code-margin: 0;
 }
 
 .slidev-layout h1 {
   font-weight: 800;
   font-size: 2rem;
+}
+
+.slidev-layout a {
+  font-size: 0.8rem;
+  color: #20578d;
 }
 
 .slidev-layout li {
@@ -21,7 +28,16 @@
 }
 
 .slidev-layout h1 + p {
-  opacity: 0.7;
+  opacity: 0.8;
+}
+
+.slidev-layout.cover h1 + p {
+  opacity: 0.9;
+  font-size: 1.5rem;
+}
+
+.slidev-layout h1 .number {
+  color: #2d79c7;
 }
 
 .slidev-layout.section h1 + p {
@@ -41,4 +57,17 @@ li.slidev-vclick-current {
   grid-template-columns: 1fr 1fr;
   row-gap: 20px;
   column-gap: 40px;
+}
+
+.reference {
+  margin-block: 1rem;
+}
+
+.reference p {
+  margin: 0;
+}
+
+.error-output {
+  color: #a31515;
+  margin-block: 8px;
 }
