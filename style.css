@@ -36,8 +36,12 @@
   font-size: 1.5rem;
 }
 
-.slidev-layout h1 .number {
-  color: #2d79c7;
+.slidev-layout {
+  h1, p {
+    .number {
+      color: #2d79c7;
+    }
+  }
 }
 
 .slidev-layout.section h1 + p {
