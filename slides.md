@@ -476,6 +476,33 @@ const a20: void    = (() => { /* ... */})()  // Значение не будет
 layout: default
 ---
 
+# Правила типизации
+
+- Правила "приписывания" типов выражениям
+- Не должны противоречить правилам семантики
+- Используются
+  - в алгоритмах проверки и вывода типов
+  - в IDE (навигация по коду, автодополнение, рефакторинг)
+  - компилятором для оптимизаций и раскладки данных в памяти
+
+---
+layout: default
+dragPos:
+  typing_rules: 64,117,377,_
+  typing_rules2: 466,152,465,_
+  pepe: 217,123,540,_
+---
+
+# Правила типизации
+
+<img v-drag="'typing_rules'" src="./images/typing_rules.png" />
+<img v-drag="'typing_rules2'" src="./images/typing_rules2.png" />
+<img vlick v-drag="'pepe'" v-click src="./images/pepe.png" />
+
+---
+layout: default
+---
+
 # Проверка типов
 
 <div class="two-cols-grid">
@@ -523,6 +550,63 @@ layout: default
 
 <img src="./images/type_compatibility.png" />
 
+
+---
+layout: default
+---
+
+# Система типов с простыми типами
+
+- Типы считаются совместимыми, если они полностью идентичны
+- Различающиеся типы несовместимы
+
+```ts twoslash
+const a: string = 42
+
+const f = (arg: number)=> { }
+
+f(a)
+```
+
+---
+layout: default
+---
+
+# Полиморфизм
+
+- Один и тот же код может работать со значениями разных типов
+
+Виды полиморфизма:
+
+- Отношение подтипов (**Subtyping**)
+- Параметрический полиморфизм (**Generics**)
+- **Ad-hoc** полиморфизм
+
+А также, бывает *статический* и *динамический*.
+
+---
+layout: default
+---
+
+# Отношение подтипов (<:)
+
+- "Полиморфизм для бедных"
+- Похоже на отношение вложения множеств
+- Правило совместимости типов:
+
+<div class="text-center">
+
+```text
+Актуальный тип <: Ожидаемый тип
+```
+
+</div>
+
+---
+layout: default
+---
+
+<img src="./images/grid_of_types.svg" style="width:100%" />
 
 ---
 layout: default
@@ -651,6 +735,25 @@ layout: default
 
 <img src="./images/type_inference.png" />
 
+
+---
+layout: default
+---
+
+<h1><span class="number">Ещё раз</span></h1>
+
+- Статический анализ - проверка программы по её коду без исполнения
+- Типы - множества допустимых значений
+- Система типов - предотвращение некоторых ошибок во время исполнения
+- Система типов описывается правилами типизации
+- Система типов решает задачи проверки типов и вывода типов
+
+---
+layout: section
+---
+
+<h1><span class="number">3. </span>Надёжность системы типов</h1>
+
 ---
 layout: default
 ---
@@ -764,355 +867,9 @@ layout: default
 
 <h1><span class="number">Ещё раз</span></h1>
 
-- Статический анализ - проверка программы по её коду без исполнения
-- Типы - множества допустимых значений
-- Система типов - предотвращение ошибок типизации
 - Надёжность системы типов - гарантии достоверности типов
+- В TypeScript ненадёжная система типов
 - При ненадёжной системе типов нужны best practices и дисциплина кода
-
----
-layout: section
----
-
-<h1><span class="number">3. </span>Правила типизации</h1>
-
----
-layout: default
----
-
-# Правила типизации
-
-- Правила "приписывания" типов выражениям
-- Не должны противоречить правилам семантики
-- Используются
-  - в алгоритмах проверки и вывода типов
-  - в IDE (навигация по коду, автодополнение, рефакторинг)
-  - компилятором для оптимизаций и раскладки данных в памяти
-
----
-layout: default
-dragPos:
-  typing_rules: 64,117,377,_
-  typing_rules2: 466,152,465,_
-  pepe: 217,123,540,_
----
-
-# Правила типизации
-
-<img v-drag="'typing_rules'" src="./images/typing_rules.png" />
-<img v-drag="'typing_rules2'" src="./images/typing_rules2.png" />
-<img vlick v-drag="'pepe'" v-click src="./images/pepe.png" />
-
----
-layout: default
----
-
-# Структура правил
-
-<br />
-<div class="text-center">
-
-```text
-Предпосылки
- ----------- 
-Следствие
-```
-
-</div>
-
-**Предпосылки** - предусловия для применения правила.
-
-**Следствие** - высказывание о типизации, когда верны все предпосылки.
-
----
-layout: default
----
-
-# Контекст типизации
-
-Высказывания о типизации переменных и констант в текущей лексической области видимости
-
-<div class="text-center">
-
-```text
-Г |- <высказывания типизации в контексте Г>
-```
-
-где Г - список пар (имя: Т  ип)
-
-</div>
-
----
-layout: default
----
-
-# Литеральные выражения
-
-<br />
-<div class="text-center">
-
-```text
-|- m - литерал типа T
- -------------------------- 
-|- m: T
-```
-
-Литералу соответствует его собственный тип.
-
-</div>
-
----
-layout: default
----
-
-# Литеральные выражения
-
-````md magic-move
-```ts
-42            // number
-100500.5      // number
-"The Answer"  // string
-true          // boolean
-false         // boolean
-```
-```ts
-let a1 = 42            // number
-let a2 = 100500.5      // number
-let a3 = "The Answer"  // string
-let a4 = true          // boolean
-let a5 = false         // boolean
-```
-```ts
-const a1 = 42            // 42
-const a2 = 100500.5      // 100500.5
-const a3 = "The Answer"  // "The Answer"
-const a4 = true          // true
-const a5 = false         // false
-```
-```ts
-const a1 = 42            // 42
-const a2 = 100500.5      // 100500.5
-const a3 = "The Answer"  // "The Answer"
-const a4 = true          // true
-const a5 = false         // false
-
-const a6 = null          // null
-const a7 = undefined     // undefined
-```
-````
-
-<v-click at="2">
-
-Если данные неизменны, то литералу соответствует Unit-тип.
-
-</v-click>
-
----
-layout: default
----
-
-# Аннотации типов
-
-<div class="text-center">
-
-```text
-
- ------------------ 
-Г |- (m as T): T
-```
-
-</div>
-
-Если к выражению прямо в коде приписан тип, то верим написанному
-
----
-layout: default
----
-
-# Аннотации типов
-
-````md magic-move
-```ts
-const f =
-  (arg: string) => {
-    const arr = arg.split(' ');
-    return arr.length
-  }
-```
-```ts
-const f: (arg: string) => number   =
-  (arg: string): number => {
-    const arr: string[] = arg.split(' ');
-    return arr.length
-  }
-```
-```ts {3}
-const f: (arg: string) => number   =
-  (arg: string): number => {
-    const arr: string[] = (   arg as string   ).split(' ');
-    return arr.length
-  }
-```
-```ts {3}
-const f: (arg: string) => number   =
-  (arg: string): number => {
-    const arr: string[] = (   arg.split as (sep: string) => string[]   )(' ');
-    return arr.length
-  }
-```
-```ts {4}
-const f: (arg: string) => number   =
-  (arg: string): number => {
-    const arr: string[] = arg.split(' ');
-    return    arr.length as number
-  }
-```
-````
-
----
-layout: default
----
-
-# Составные типы
-
-- Кортежи:
-
-<div class="text-center">
-
-```text
-Г |- a1: T1, a2: T2, a3: T3, ...
- ------------------------------------------ 
-Г |- [a1, a2, a3, ...]: [T1, T2, T3, ...]
-```
-
-</div>
-
-- Объекты:
-
-<div class="text-center">
-
-```text
-Г |- a1: T1, a2: T2, a3: T3, ...
- -------------------------------------------------------------------- 
-Г |- { p1: a1, p2: a2, p3: a3, ...}: { p1: T1, p2: T2, p3: T3, ...}
-```
-
-</div>
-
----
-layout: default
----
-
-# Составные типы
-
-````md magic-move
-```ts
-let a1 = []            // never[]
-let a2 = {}            // {}
-let a3 = () => {}      // () => void
-```
-```ts
-let a1 = [42, 100500.5]                  // number[]
-let a2 = { a: "The Answer", b: false }   // { a: string, b: boolean }
-let a3 = (arg: string): number => {
-  return arg.length
-}                                        // (arg: string) => number
-```
-```ts
-const a1 = [42, 100500.5] as const                  // readonly [42, 100500.5]
-const a2 = { a: "The Answer", b: false } as const
-// { readonly a: string, readonly b: boolean }
-
-const a3 = (arg: string): number => {
-  return arg.length
-}                                                   // (arg: string) => number
-```
-````
-
----
-layout: default
----
-
-# Функциональные типы
-
-````md magic-move
-```ts
-const f = (arg1: string, arg2: number) => arg1.length === arg2
-
-const res = f("fooBar", 6)
-```
-```ts {1,4}
-const f: (arg1: string, arg2: number) => boolean  =
-  (arg1: string, arg2: number) => arg1.length === arg2
-
-const res: boolean  =
-  f("fooBar", 6)
-```
-````
-
-<v-click at="1">
-
-- Тип лямбда-выражения = (...типы аргументов) => выведенный тип результата
-- Тип вызова функции равен типу результата функции
-
-</v-click>
-
----
-layout: default
----
-
-# Система типов с простыми типами
-
-- Типы считаются совместимыми, если они полностью идентичны
-- Различающиеся типы несовместимы
-
-```ts twoslash
-const a: string = 42
-
-const f = (arg: number)=> { }
-
-f(a)
-```
-
----
-layout: default
----
-
-# Полиморфизм
-
-- Один и тот же код может работать со значениями разных типов
-
-Виды полиморфизма:
-
-- Отношение подтипов (**Subtyping**)
-- Параметрический полиморфизм (**Generics**)
-- **Ad-hoc** полиморфизм
-
-А также, бывает *статический* и *динамический*.
-
----
-layout: default
----
-
-# Отношение подтипов (<:)
-
-- "Полиморфизм для бедных"
-- Похоже на отношение вложения множеств
-- Правило совместимости типов:
-
-<div class="text-center">
-
-```text
-Актуальный тип <: Ожидаемый тип
-```
-
-</div>
-
----
-layout: default
----
-
-<img src="./images/grid_of_types.svg" style="width:100%" />
 
 ---
 layout: section
@@ -1241,9 +998,12 @@ layout: default
 layout: default
 ---
 
-<h1><span class="number">Другими словами</span></h1>
+<h1><span class="number">Ещё раз</span></h1>
 
 - Разработка с типами - другой подход и другой стиль кода
+- Преждевременная типизация - корень всех зол
+- Предпочтение разработке сверху вниз
+- Type Driven Development
 
 ---
 layout: section
