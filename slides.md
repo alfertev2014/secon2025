@@ -14,15 +14,6 @@ image: ./images/cover.png
 ---
 
 ---
-layout: cover
-class: text-center
----
-
-# Ныряем в теорию типов
-
-для лучшего понимания языков программирования на примере TypeScript
-
----
 layout: default
 ---
 
@@ -139,22 +130,22 @@ dragPos:
 layout: default
 ---
 
-# Теория
+# Типы в языках программирования
 
-<div class="two-cols-grid" style="grid-template-columns: 2fr 1fr">
-<div>
-
-- Теория множеств
-- Теория доказательств
-- Теория формальных языков и грамматик
-- Лямбда-исчисление
-- Операционная семантика
-- Теория категорий
-- ...
-
-</div>
+<div class="two-cols-grid" style="grid-template-columns: 1fr 2fr">
 <div>
   <img src="./images/tapl.png" />
+</div>
+<div>
+<br />
+
+- Безтиповые системы
+- Простые типы
+- Подтипы
+- Рекурсивные типы
+- Полиморфизм
+- Системы высших порядков
+
 </div>
 </div>
 
@@ -167,23 +158,13 @@ layout: default
 1. Дизайн языков программирования
 1. Системы типов
 1. Правила типизации
-1. Влияние на методологию
-
----
-layout: center
----
-
-<h1><span class="number">1. </span>Дизайн языков программирования</h1>
-<br />
-<p><span class="number">1.1. </span>Синтаксис, семантика и реализации языка</p>
-<p><span class="number">1.2. </span>Компромиссы дизайна языков</p>
-<p><span class="number">1.3. </span>Теоретические основы</p>
+1. Влияние типизации на методологию разработки
 
 ---
 layout: section
 ---
 
-<h1><span class="number">1.1. </span>Синтаксис, семантика и реализации языка</h1>
+<h1><span class="number">1. </span>Дизайн языков программирования</h1>
 
 ---
 layout: default
@@ -234,47 +215,18 @@ IDE, отладчики, профилировщики
 </div>
 
 ---
-layout: image
-image: ./images/ecmascript_spec.png
-backgroundSize: contain
----
-
----
-layout: default
----
-
-<img src="./images/implementation.svg"  style="margin: auto; width: 100%"/>
-
----
-layout: default
----
-
-<img src="./images/implementation_ts.svg" style="margin: auto; width: 100%"/>
-
-<br />
-
-- или использовать `tsx` (или аналоги)
-- или запускать `*.ts` нативно на `Node.js`
-
----
-layout: section
----
-
-<h1><span class="number">1.2. </span>Компромиссы дизайна языков программирования</h1>
-
----
 layout: default
 ---
 
 <style>
   .dimension {
-    width: 11em;
+    width: 12rem;
     .header {
       font-weight: 800;
       color: #2d79c7;
     }
     .description {
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       opacity: 0.7;
     }
   }
@@ -286,7 +238,6 @@ layout: default
     width: 100%;
     column-gap: 1rem;
   }
-
 </style>
 
 <div class="dimensions-grid">
@@ -303,7 +254,7 @@ layout: default
 <div class="header">Поддержка IDE</div><div class="description">навигация по коду, автодополнение, рефакторинг</div>
 </div>
 <div>
-  <img src="./images/diagram.png" style="width: 10rem; margin: auto" />
+  <img src="./images/diagram.png" style="width: 12rem " />
 </div>
 <div class="dimension">
 <div class="header">Производительность</div><div class="description">возможность автоматической оптимизации</div>
@@ -318,12 +269,6 @@ layout: default
 <div class="header">Модульность</div><div class="description">раздельная разработка, распространение в пакетах</div>
 </div>
 </div>
-
----
-layout: section
----
-
-<h1><span class="number">1.3. </span>Теоретические основы</h1>
 
 ---
 layout: default
@@ -366,22 +311,10 @@ layout: default
 - Разные языки имеют общую теорию
 
 ---
-layout: center
----
-
-<h1><span class="number">2. </span>Системы типов</h1>
-
-<br />
-<p><span class="number">2.1. </span>Статический анализ</p>
-<p><span class="number">2.2. </span>Что такое типы</p>
-<p><span class="number">2.3. </span>Система типов</p>
-<p><span class="number">2.4. </span>Надёжность</p>
-
----
 layout: section
 ---
 
-<h1><span class="number">2.1. </span>Статический анализ</h1>
+<h1><span class="number">2. </span>Системы типов</h1>
 
 ---
 layout: default
@@ -425,25 +358,40 @@ layout: default
 
 # Статический анализ
 
+<div class="two-cols-grid" style="grid-template-columns: 2fr 3fr">
+<div>
+  <img src="./images/static_analyzing.jpg" style="width: 100%" />
+</div>
+<div>
 <br />
 
 - Рассуждения об исполнении программы без её реального запуска
 - Опирается только на код программы и спецификацию языка
 - Обнаружение потенциальных ошибок или **доказательство** их отсутствия
 
+</div>
+</div>
+
 ---
 layout: default
 ---
 
-# Формальная верификация
+# Система типов
 
-<img src="./images/verification.svg" style="margin: auto" />
+<div class="two-cols-grid" style="grid-template-columns: 2fr 1fr">
+<div>
 
----
-layout: section
----
+- Система доказательства утверждений о типах выражений
+- Опирается на семантику языка
+- Является "упрощённой версией" (проекцией) семантики
 
-<h1><span class="number">2.2. </span>Что такое типы</h1>
+Предназначена для доказательства *отсутствия* определённого рода ошибок при исполнении программы - **ошибок типизации**.
+
+</div>
+<div>
+  <img src="./images/type_system_toy.jpg" style="width: 100%" />
+</div>
+</div>
 
 ---
 layout: default
@@ -469,6 +417,7 @@ layout: default
 
 # Типы
 
+- Сущности времени компиляции
 - Утверждения о поведении программы для выражений в коде
 - В частности:
   - **Множества  допустимых значений для выражений**
@@ -505,7 +454,7 @@ const a12: null   = null
 const a13: undefined   = undefined
 
 // Типы-объединения
-const a14:  4 | 8 | 15 | 16| 23 | 42   = 42
+const a14:  4 | 8 | 15 | 16 | 23 | 42   = 42
 const a15:  "red" | "green" | "blue" | undefined    = "green"
 const a15: { foo: number; bar: boolean; baz: string } | null   = null
 
@@ -522,24 +471,6 @@ const a19: any   = "😤";  // Не используйте его, пожалу�
 const a20: void    = (() => { /* ... */})()  // Значение не будет использовано
 ```
 ````
-
----
-layout: section
----
-
-<h1><span class="number">2.3. </span>Система типов</h1>
-
----
-layout: default
----
-
-# Система типов
-
-- Система доказательства утверждений о типах выражений
-- Опирается на семантику языка
-- Является "упрощённой версией" (проекцией) семантики
-
-Предназначена для доказательства *отсутствия* определённого рода ошибок при исполнении программы - **ошибок типизации**.
 
 ---
 layout: default
@@ -619,7 +550,8 @@ const b = "The Answer"
 
 const c = b + " is " + a
 
-const d = (s: string, n: number) => s.length === n
+const d =
+  (s: string, n: number) => s.length === n * a
 
 const e = d(b, a)
 ```
@@ -631,33 +563,81 @@ const b/*: ???*/ = "The Answer"
 const c/*: ???*/ = b + " is " + a
 
 const d/*: ???*/ =
-  (s: string, n: number)/*: ???*/ => s.length === n
+  (s: string, n: number)/*: ???*/ => s.length === n * a
 
 const e/*: ???*/ = d(b, a)
 ```
-```ts
-const a: 42                                 = 42
+```ts {1}
+const a: 42    = 42
 
-const b: "The Answer" = "The Answer"
+const b/*: ???*/ = "The Answer"
 
-const c: string                             = b + " is " + a
+const c/*: ???*/ = b + " is " + a
 
-const d: (s: string, n: number) => boolean  =
-  (s: string, n: number): boolean => s.length === n
+const d/*: ???*/ =
+  (s: string, n: number)/*: ???*/ => s.length === n * a
 
-const e: boolean                            = d(b, a)
+const e/*: ???*/ = d(b, a)
+```
+```ts {3}
+const a: 42    = 42
+
+const b: "The Answer"   = "The Answer"
+
+const c/*: ???*/ = b + " is " + a
+
+const d/*: ???*/ =
+  (s: string, n: number)/*: ???*/ => s.length === n * a
+
+const e/*: ???*/ = d(b, a)
+```
+```ts {5}
+const a: 42    = 42
+
+const b: "The Answer"   = "The Answer"
+
+const c: string   = b + " is " + a
+
+const d/*: ???*/ =
+  (s: string, n: number)/*: ???*/ => s.length === n * a
+
+const e/*: ???*/ = d(b, a)
 ```
 ```ts {8}
-const a: 42                                 = 42
+const a: 42    = 42
 
-const b: "The Answer" = "The Answer"
+const b: "The Answer"   = "The Answer"
 
-const c: string                             = b + " is " + a
+const c: string   = b + " is " + a
 
-const d: (s: string, n: number) => boolean  =
-  (s, n) => s.length === n
+const d/*: ???*/ =
+  (s: string, n: number): boolean => s.length === n * a
 
-const e: boolean                            = d(b, a)
+const e/*: ???*/ = d(b, a)
+```
+```ts {7}
+const a: 42    = 42
+
+const b: "The Answer"   = "The Answer"
+
+const c: string   = b + " is " + a
+
+const d: (s: string, n: number) => boolean   =
+  (s: string, n: number): boolean => s.length === n * a
+
+const e/*: ???*/ = d(b, a)
+```
+```ts {10}
+const a: 42    = 42
+
+const b: "The Answer"   = "The Answer"
+
+const c: string   = b + " is " + a
+
+const d: (s: string, n: number) => boolean   =
+  (s: string, n: number): boolean => s.length === n * a
+
+const e: boolean   = d(b, a)
 ```
 ````
 
@@ -670,12 +650,6 @@ layout: default
 [https://www.typescriptlang.org/docs/handbook/type-inference.html]
 
 <img src="./images/type_inference.png" />
-
----
-layout: section
----
-
-<h1><span class="number">2.4. </span>Надёжность</h1>
 
 ---
 layout: default
@@ -694,13 +668,13 @@ layout: default
 
 # Надёжность системы типов
 
-<br />
-
-<div class="text-center">
+<div>
 
 Система типов **надёжна** (*sound*), если выведенные типы **_гарантированно_** соответствуют семантике (поведению в runtime).
 
 </div>
+
+<img src="./images/soundness.jpg" style="margin: auto; width: 80%" />
 
 ---
 layout: default
@@ -725,6 +699,13 @@ TypeError: b.prop.toUpperCase is not a function
 </div>
 
 ---
+layout: image
+image: ./images/nenastoyashiy.jpg
+backgroundSize: contain
+---
+
+
+---
 layout: default
 ---
 
@@ -734,22 +715,36 @@ layout: default
 
 **Non-goals:**
 
-- Apply a **sound**`*` or "**provably correct**" type system. Instead, strike a balance between correctness and productivity.
-
-`*` Система типов является надёжной (“**sound**”), если статически выведенные типы выражений **_гарантированно_** соответствуют значениям в runtime.
+- Apply a **sound** or "**provably correct**" type system. Instead, strike a balance between correctness and productivity.
 
 ---
 layout: default
 ---
 
+<style scoped>
+  p {
+    background-color: #ffffff;
+  }
+</style>
+
 # И как с этим жить?
 
-<br />
+<img src="./images/house_of_cards.jpg" style="position: absolute; z-index: -100; right: 100px; bottom: 0; width: 642px" />
 
-- Мы **_хотим_**, чтобы типы в коде были верными
-- *Ответственность ложится на разработчика*
-- Type checker - просто инструмент
-- Для гарантий нужны **_best practices_** и **_соглашения_**
+<br />
+<div style="text-align: center; font-size: 1.5rem">
+<v-clicks>
+
+Мы **_хотим_**, чтобы типы в коде были верными
+
+*Ответственность ложится на разработчика*
+
+Type checker - просто инструмент
+
+Для гарантий нужны **_best practices_** и **_соглашения_**
+
+</v-clicks>
+</div>
 
 ---
 layout: default
@@ -759,7 +754,7 @@ dragPos:
 ---
 
 <img v-drag="'first_time'" src="./images/first_time.png" />
-<div v-drag="'cpp'" style="background-color: white;text-alignment: center">
+<div v-drag="'cpp'" style="background-color: white;text-align: center">
 <b>C++</b>
 </div>
 
@@ -769,11 +764,11 @@ layout: default
 
 <h1><span class="number">Ещё раз</span></h1>
 
-- Программы с ошибками семантически некорректны
 - Статический анализ - проверка программы по её коду без исполнения
 - Типы - множества допустимых значений
 - Система типов - предотвращение ошибок типизации
-- Надёжность системы типов - гарантии достоверности типов 
+- Надёжность системы типов - гарантии достоверности типов
+- При ненадёжной системе типов нужны best practices и дисциплина кода
 
 ---
 layout: section
@@ -789,9 +784,10 @@ layout: default
 
 - Правила "приписывания" типов выражениям
 - Не должны противоречить правилам семантики
-- Используются в алгоритмах проверки и вывода типов
-- Используются в IDE (навигация по коду, автодополнение, рефакторинг)
-- Используются компилятором для структур данных в памяти и оптимизаций
+- Используются
+  - в алгоритмах проверки и вывода типов
+  - в IDE (навигация по коду, автодополнение, рефакторинг)
+  - компилятором для оптимизаций и раскладки данных в памяти
 
 ---
 layout: default
@@ -818,7 +814,7 @@ layout: default
 
 ```text
 Предпосылки
------------ 
+ ----------- 
 Следствие
 ```
 
@@ -856,9 +852,9 @@ layout: default
 <div class="text-center">
 
 ```text
-|- M - литерал типа T
---------------------------
-|- M: T
+|- m - литерал типа T
+ -------------------------- 
+|- m: T
 ```
 
 Литералу соответствует его собственный тип.
@@ -893,7 +889,6 @@ const a3 = "The Answer"  // "The Answer"
 const a4 = true          // true
 const a5 = false         // false
 ```
-
 ```ts
 const a1 = 42            // 42
 const a2 = 100500.5      // 100500.5
@@ -922,19 +917,13 @@ layout: default
 
 ```text
 
-------------------
-Г |- (M as T): T
-```
-
-<br />
-
-```text
-
------------------------
-Г |- (M satisfies T): T
+ ------------------ 
+Г |- (m as T): T
 ```
 
 </div>
+
+Если к выражению прямо в коде приписан тип, то верим написанному
 
 ---
 layout: default
@@ -944,40 +933,39 @@ layout: default
 
 ````md magic-move
 ```ts
-const f = (arg: string) => {
-  const arr = arg.split(' ');
-  return arr.length
-}
+const f =
+  (arg: string) => {
+    const arr = arg.split(' ');
+    return arr.length
+  }
 ```
 ```ts
-const f: (arg: string) => number   =  (arg: string): number => {
-  const arr: string[] = arg.split(' ');
-  return arr.length
-}
-```
-```ts {2}
-const f: (arg: string) => number   =  (arg: string): number => {
-  const arr: string[] = (arg as string).split(' ');
-  return arr.length
-}
-```
-```ts {2}
-const f: (arg: string) => number   =  (arg: string): number => {
-  const arr: string[] = (arg.split as (sep: string) => string[])(' ');
-  return arr.length
-}
+const f: (arg: string) => number   =
+  (arg: string): number => {
+    const arr: string[] = arg.split(' ');
+    return arr.length
+  }
 ```
 ```ts {3}
-const f: (arg: string) => number   =  (arg: string): number => {
-  const arr: string[] = arg.split(' ');
-  return arr.length as number
-}
+const f: (arg: string) => number   =
+  (arg: string): number => {
+    const arr: string[] = (   arg as string   ).split(' ');
+    return arr.length
+  }
 ```
-```ts {2,3}
-const f: (arg: string) => number   =  (arg: string): number => {
-  const arr: string[] = (arg.split satisfies (sep: string) => string[])(" ");
-  return arr.length satisfies number
-}
+```ts {3}
+const f: (arg: string) => number   =
+  (arg: string): number => {
+    const arr: string[] = (   arg.split as (sep: string) => string[]   )(' ');
+    return arr.length
+  }
+```
+```ts {4}
+const f: (arg: string) => number   =
+  (arg: string): number => {
+    const arr: string[] = arg.split(' ');
+    return    arr.length as number
+  }
 ```
 ````
 
@@ -987,24 +975,30 @@ layout: default
 
 # Составные типы
 
-Кортежи:
+- Кортежи:
+
+<div class="text-center">
 
 ```text
-Г |- A1: T1, A2: T2, A3: T3, ...
------------------------------
-Г |- [A1, A2, A3, ...]: [T1, T2, T3, ...]
+Г |- a1: T1, a2: T2, a3: T3, ...
+ ------------------------------------------ 
+Г |- [a1, a2, a3, ...]: [T1, T2, T3, ...]
 ```
 
-Объекты:
+</div>
+
+- Объекты:
+
+<div class="text-center">
 
 ```text
-Г |- A1: T1, A2: T2, A3: T3, ...
------------------------------
-Г |- { p1: A1, p2: A2, p3: A3, ...}: { p1: T1, p2: T2, p3: T3, ...}
+Г |- a1: T1, a2: T2, a3: T3, ...
+ -------------------------------------------------------------------- 
+Г |- { p1: a1, p2: a2, p3: a3, ...}: { p1: T1, p2: T2, p3: T3, ...}
 ```
 
+</div>
 
-Составной тип зависит от типов своих составляющих.
 ---
 layout: default
 ---
@@ -1104,63 +1098,114 @@ layout: default
 
 - "Полиморфизм для бедных"
 - Похоже на отношение вложения множеств
-- Если выражение имеет тип Т, то значение может быть любого подтипа T
+- Правило совместимости типов:
+
+<div class="text-center">
+
+```text
+Актуальный тип <: Ожидаемый тип
+```
+
+</div>
 
 ---
 layout: default
 ---
 
-# Отношение подтипов: правила
-
-- Составляющие объединения типов являются подтипами объединения
-
-```
-A  <:  A | B
-B  <:  A | B
-```
-
-- Пересечение типов является подтипом своих составляющих:
-
-```
-A & B  <:  A
-A & B  <:  B
-```
-
----
-layout: default
----
-
-# Отношение подтипов: правила
-
-- Объектный тип - подтип объектного типа с меньшим числом properties:
-
-```
-{ a: A; b: B; c: C }   <:   { a: A; b: B; }  <:  { a: A; }
-{ a: A; b: B; c: C }   <:   { b: A; с: B; }  <:  { с: B; }
-```
-
-- Тип функции - подтип типа функции с большим числом аргументов:
-
-```
-(a: A) => R   <:   (a: A, b: B) => R   <:   (a: A, b: B, c: C) => R
-```
+<img src="./images/grid_of_types.svg" style="width:100%" />
 
 ---
 layout: section
 ---
 
-# 4. Влияние на методологию
+<h1><span class="number">4. </span>Влияние типизации на методологию разработки</h1>
 
 ---
-layout: image-right
-image: /images/type_driven_development.jpg
+layout: default
+class: text-center
+---
+
+Нельзя так просто взять и
+
+<img src="./images/boramir.jpg" style="width: 60%; margin: auto" />
+
+переписать проект на более строгом языке
+
+---
+layout: default
+---
+
+# Перефразируя Дональда Кнута
+
+<br />
+<div style="display: flex; flex-flow: row nowrap; justify-content: space-between; align-items: center">
+<div>
+
+Преждевременная...
+
+</div>
+<div>
+<v-clicks>
+
+оптимизация
+
+универсализация
+
+типизация
+
+</v-clicks>
+</div>
+<div>
+<p>- корень всех зол.</p>
+</div>
+</div>
+
+---
+layout: default
+---
+
+# "Сверху вниз" vs. "Снизу вверх"
+
+<br />
+<div class="two-cols-grid">
+<div>
+
+<p class="text-center"><b>⬇️ Подход "Сверху вниз"</b></p>
+
+Сначала делаем общую структуру, а потом постепенно доделываем детали.
+
+</div>
+<div>
+
+<p class="text-center"><b>⬆️ Подход "Снизу вверх":</b></p>
+
+Сначала хорошо отлаживаем детали, а потом постепенно собираем из них
+
+</div>
+</div>
+
+
+---
+layout: default
 ---
 
 # Type Driven Development
 
+<div class="two-cols-grid" style="grid-template-columns: 2fr 1fr">
+<div>
+<br />
+
+Цикл из трёх фаз:
+
 - Type
 - Define
 - Refine
+
+</div>
+<div>
+  <img src="./images/type_driven_development.jpg" style="width: 100%" />
+</div>
+</div>
 
 ---
 layout: default
@@ -1191,6 +1236,14 @@ layout: default
     - Порефакторить, опираясь на здравый смысл
 
 *Повторить цикл с п. 1*
+
+---
+layout: default
+---
+
+<h1><span class="number">Другими словами</span></h1>
+
+- Разработка с типами - другой подход и другой стиль кода
 
 ---
 layout: section
