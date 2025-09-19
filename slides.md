@@ -8,7 +8,7 @@ drawings:
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 fonts:
-  sans: Roboto
+  sans: "SegoeUIBold"
 layout: image
 image: ./images/cover.png
 ---
@@ -160,6 +160,85 @@ layout: default
 1. Правила типизации
 1. Влияние типизации на методологию разработки
 
+
+---
+layout: section
+---
+
+# Разомнёмся
+
+---
+layout: default
+---
+
+# Что выведет код (JavaScript)?
+
+````md magic-move
+```ts
+console.log( "SECON" + 2025 )
+
+console.log( 2025 + "SECON" )
+```
+```ts
+console.log( "SECON" + 2025 )  // --> SECON2025
+
+console.log( 2025 + "SECON" )  // --> 2025SECON
+```
+```ts
+console.log( "SECON" - 2025 )
+
+console.log( 2025 - "SECON" )
+```
+```ts
+console.log( "SECON" - 2025 )  // --> NaN
+
+console.log( 2025 - "SECON" )  // --> NaN
+```
+````
+
+---
+layout: default
+---
+
+# Что выведет код (TypeScript)?
+
+```ts twoslash
+console.log( "SECON" - 2025 )
+
+console.log( 2025 - "SECON" )
+```
+
+---
+layout: default
+---
+
+# Что выведет код (JavaScript)?
+
+````md magic-move
+```ts
+console.log( "SECON"[2025] )
+
+console.log( 2025["SECON"] )
+```
+```ts
+console.log( "SECON"[2025] )  // --> undefined
+
+console.log( 2025["SECON"] )  // --> undefined
+```
+````
+
+---
+layout: default
+---
+
+# Что выведет код (TypeScript)?
+
+```ts twoslash
+console.log( "SECON"[2025] )
+
+console.log( 2025["SECON"] )
+```
+
 ---
 layout: section
 ---
@@ -174,13 +253,13 @@ layout: default
 
 <style>
   .two-cols-grid > div {
-    border: 2px solid #2d79c7;
+    border: 2px solid #00bdf2;
     border-radius: 1rem;
     padding-left: 1rem;
   }
 </style>
 <div class="two-cols-grid" style="align-items: stretch">
-<div>
+<div v-click>
 
 **Синтаксис**
 
@@ -189,7 +268,7 @@ layout: default
 *(формальная грамматика)*
 
 </div>
-<div>
+<div v-click>
 
 **Семантика**
 
@@ -198,18 +277,64 @@ layout: default
 *(формальная спецификация)*
 
 </div>
-<div>
+<div v-click>
 
 **Реализация**
 
 компилятор или интерпретатор, среда исполнения
 
 </div>
-<div>
+<div v-click>
 
 **Инструменты**
 
 IDE, отладчики, профилировщики
+
+</div>
+</div>
+
+---
+layout: image
+image: ./images/astexplorer.png
+backgroundSize: contain
+---
+
+---
+layout: default
+---
+
+# Спецификация языка TypeScript?
+
+<div class="two-cols-grid" style="align-items: start">
+<div>
+
+**JavaScript**
+
+**имеет спецификацию**:
+
+- ECMAScript
+- Web-стандарты
+
+</div>
+<div>
+
+**TypeScript**
+
+<p><b v-mark.red>не имеет спецификации</b>:</p>
+
+- Компилятор tsc
+- Утилитные типы
+- `*.d.ts` для JS, Web API и Node.js
+
+</div>
+<div v-click="2" style="text-align: center">
+
+*(Язык программирования здорового человека)*
+
+</div>
+<div v-click="2" style="text-align: center">
+
+*(Язык программирования курильщика)*
 
 </div>
 </div>
@@ -223,7 +348,6 @@ layout: default
     width: 12rem;
     .header {
       font-weight: 800;
-      color: #2d79c7;
     }
     .description {
       font-size: 0.7rem;
@@ -233,7 +357,6 @@ layout: default
   .dimensions-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 6rem 1fr 6rem;
     align-items: center;
     width: 100%;
     column-gap: 1rem;
@@ -274,7 +397,7 @@ layout: default
 layout: default
 ---
 
-# Общие черты языков программирования
+# У всех языков есть
 
 - Элементарные типы данных и операции над ними
 - Составные типы данных (объекты и массивы)
@@ -293,17 +416,17 @@ layout: default
 Теоретический каркас языков программирования
 
 - Синтаксис:
-  - Абстракция: `λ x . M`
-  - Применение: `M N`
+  - Абстракция: `λ x . M` - "объявление" символа `x`
+  - Применение: `M N` - "вызов функции" `M` с аргументом `N`
 - Семантика:
-  - "альфа-конверсия": `λ x . M` === `λ y . M` (с заменой `x` на `y`)
-  - "бета-редукция": `(λ x . M) N` === `M` (с заменой `x` на `N`)
+  - "альфа-конверсия": `λ x . M` === `λ y . M` (с заменой `x` на `y` внутри `M`)
+  - "бета-редукция": `(λ x . M) N` === `M` (с заменой `x` на `N` внутри `M`)
 
 ---
 layout: default
 ---
 
-<h1><span class="number">Ещё раз</span></h1>
+<h1>Ещё раз</h1>
 
 - Язык программирования - спецификация, реализации и инструменты
 - В дизайне языка много компромиссов
@@ -397,9 +520,9 @@ layout: default
 layout: default
 ---
 
-# Раскладка данных в памяти
+# Что такое типы?
 
-Например, как структуры в языках C и C++
+Раскладка данных в памяти?
 
 ```c
 struct S {
@@ -410,6 +533,8 @@ struct S {
   // ...
 };
 ```
+
+Например, как структуры в языках C и C++.
 
 ---
 layout: default
@@ -471,6 +596,39 @@ const a19: any   = "😤";  // Не используйте его, пожалу�
 const a20: void    = (() => { /* ... */})()  // Значение не будет использовано
 ```
 ````
+
+---
+layout: default
+---
+
+# Типовые выражения
+
+```ts
+type S = string
+type E<C> = { on: C }
+
+const s: E<S | number> & { off: E<boolean>["on"] | number } = {
+  on: "Промпт индустрии",
+  off: false
+}
+```
+
+---
+layout: default
+---
+
+# Возможности системы типов TypeScript
+
+<ul>
+<li><b>Структурная</b> типизация</li>
+<li>Отношение <b>подтипов</b></li>
+<li><b>Рекурсивные</b> типы</li>
+<li><b>Union</b> и <b>Intersection</b> типы</li>
+<li><b>Unit</b> типы (или литеральные типы)</li>
+<li><b>Generics</b> (первого порядка) с <b>ограничениями</b> сверху на параметры и <b>вариантностью</b></li>
+<li><b>Условные</b> типы</li>
+<li><b>Flow typing</b> и <b>type predicates</b></li>
+</ul>
 
 ---
 layout: default
@@ -557,15 +715,18 @@ layout: default
 
 # Система типов с простыми типами
 
-- Типы считаются совместимыми, если они полностью идентичны
-- Различающиеся типы несовместимы
-
 ```ts twoslash
-const a: string = 42
+const a: string   = 42
 
-const f = (arg: number)=> { }
+const f   = (arg: number) => { /* ... */}
 
 f(a)
+
+const b: { x: number; y: number }   = { x: 42, y: 100500 }
+
+const g   = (point: { x: number; y: number }) => { /* ... */}
+
+g(b)
 ```
 
 ---
@@ -702,7 +863,7 @@ const e/*: ???*/ = d(b, a)
 ```ts {7}
 const a: 42    = 42
 
-const b: "The Answer"   = "The Answer"
+let b: string   = "The Answer"
 
 const c: string   = b + " is " + a
 
@@ -714,7 +875,7 @@ const e/*: ???*/ = d(b, a)
 ```ts {10}
 const a: 42    = 42
 
-const b: "The Answer"   = "The Answer"
+let b: string   = "The Answer"
 
 const c: string   = b + " is " + a
 
@@ -740,7 +901,7 @@ layout: default
 layout: default
 ---
 
-<h1><span class="number">Ещё раз</span></h1>
+<h1>Ещё раз</h1>
 
 - Статический анализ - проверка программы по её коду без исполнения
 - Типы - множества допустимых значений
@@ -807,7 +968,6 @@ image: ./images/nenastoyashiy.jpg
 backgroundSize: contain
 ---
 
-
 ---
 layout: default
 ---
@@ -865,7 +1025,7 @@ dragPos:
 layout: default
 ---
 
-<h1><span class="number">Ещё раз</span></h1>
+<h1>Ещё раз</h1>
 
 - Надёжность системы типов - гарантии достоверности типов
 - В TypeScript ненадёжная система типов
@@ -880,6 +1040,7 @@ layout: section
 ---
 layout: default
 class: text-center
+style: "font-size: 1.5rem"
 ---
 
 Нельзя так просто взять и
@@ -895,7 +1056,7 @@ layout: default
 # Перефразируя Дональда Кнута
 
 <br />
-<div style="display: flex; flex-flow: row nowrap; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-flow: row nowrap; justify-content: space-between; font-style: italic; font-size: 1.4rem; align-items: center">
 <div>
 
 Преждевременная...
@@ -998,10 +1159,10 @@ layout: default
 layout: default
 ---
 
-<h1><span class="number">Ещё раз</span></h1>
+<h1>Ещё раз</h1>
 
 - Разработка с типами - другой подход и другой стиль кода
-- Преждевременная типизация - корень всех зол
+- Преждевременная типизация - тоже корень всех зол
 - Предпочтение разработке сверху вниз
 - Type Driven Development
 
